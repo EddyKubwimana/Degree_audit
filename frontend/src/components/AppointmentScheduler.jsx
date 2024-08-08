@@ -4,10 +4,12 @@ import './AppointmentScheduler.css';
 const AppointmentScheduler = () => {
   const [advisors, setAdvisors] = useState([]);
   const [selectedAdvisor, setSelectedAdvisor] = useState(null);
+  const [availability, setAvailability] = useState([]);
   const [reason, setReason] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Fetch all advisors on component mount
   useEffect(() => {
     const fetchAdvisors = async () => {
       try {
@@ -23,7 +25,6 @@ const AppointmentScheduler = () => {
         }
 
         const data = await response.json();
-        console.log(data);
 
         if (data.error) {
           throw new Error(data.message || 'Error fetching advisors');
@@ -40,8 +41,43 @@ const AppointmentScheduler = () => {
     fetchAdvisors();
   }, []);
 
+  // Fetch availability when an advisor is selected
+  useEffect(() => {
+    if (selectedAdvisor) {
+      const fetchAvailability = async () => {
+        try {
+          const response = await fetch('http://your-server-path/api/fetch_advisor_availability.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ advisor_id: selectedAdvisor })
+          });
+
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+
+          const data = await response.json();
+
+          if (data.error) {
+            throw new Error(data.message || 'Error fetching availability');
+          }
+
+          setAvailability(data.availability);
+        } catch (error) {
+          setError(error.message);
+        }
+      };
+
+      fetchAvailability();
+    }
+  }, [selectedAdvisor]);
+
   if (loading) return <p>Loading advisors...</p>;
   if (error) return <p>Error: {error}</p>;
+
+  const selectedAdvisorData = advisors.find(advisor => advisor.AdvisorId === selectedAdvisor);
 
   return (
     <div className='main-content'>
@@ -54,27 +90,35 @@ const AppointmentScheduler = () => {
           <ul>
             {advisors.map(advisor => (
               <li
-                key={advisor.id}
-                className={selectedAdvisor === advisor.id ? 'selected' : ''}
-                onClick={() => setSelectedAdvisor(advisor.id)}
+                key={advisor.AdvisorId}
+                className={selectedAdvisor === advisor.AdvisorId ? 'selected' : ''}
+                onClick={() => setSelectedAdvisor(advisor.AdvisorId)}
               >
-                <div className="advisor-icon">{advisor.id}</div>
-                <div className="advisor-name">{advisor.name}</div>
+                <div className="advisor-icon">{advisor.AdvisorId}</div>
+                <div className="advisor-name">{advisor.Name}</div>
               </li>
             ))}
           </ul>
           <button className="continue-button">Continue</button>
         </div>
         <div className="slot-selection">
-          <h3>Choose Slot</h3>
-          <div className="time-slots">
-            {timeSlots.map((slot, index) => (
-              <div key={index} className="time-slot">
-                <span>{slot.day}</span>
-                <span>{slot.slots}</span>
+          {selectedAdvisorData && (
+            <>
+              <h3>Selected Advisor: {selectedAdvisorData.Name}</h3>
+              <div className="time-slots">
+                {availability.length > 0 ? (
+                  availability.map((slot, index) => (
+                    <div key={index} className="time-slot">
+                      <span>{new Date(slot.date).toLocaleDateString()}</span>
+                      <span>{slot.start_time} - {slot.end_time}</span>
+                    </div>
+                  ))
+                ) : (
+                  <p>No available slots for this advisor.</p>
+                )}
               </div>
-            ))}
-          </div>
+            </>
+          )}
           <div>
             <h3><i>Reason for Appointment<span className="asterik">*</span></i></h3>
             <textarea
@@ -90,4 +134,3 @@ const AppointmentScheduler = () => {
 };
 
 export default AppointmentScheduler;
-
