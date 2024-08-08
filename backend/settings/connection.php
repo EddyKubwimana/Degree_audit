@@ -1,12 +1,24 @@
+
 <?php
+  $db_host = '127.0.0.1';
+  $db_user = 'root';
+  $db_password = 'root';
+  $db_db = 'degree_audit';
+  $db_port = 8889;
 
-$database_name = 'degree_audit';
-$database_user = 'root';
-$database_password = '';
-$database_host = 'localhost';
+  $conn = new mysqli(
+    $db_host,
+    $db_user,
+    $db_password,
+    $db_db,
+	$db_port
+  );
+	
+  if ($conn->connect_error) {
+    echo 'Errno: '.$conn->connect_errno;
+    echo '<br >';
+    echo 'Error: '.$conn->connect_error;
+    exit();
+  }
 
-$conn = new mysqli($database_host, $database_user, $database_password, $database_name);
-if ($conn->connect_error) 
-{
-    die("Connection failed: " . $conn->connect_error);
-}
+?>
