@@ -39,7 +39,7 @@ export default () =>
     }
     else {
       try {
-        const response = await fetch('http://localhost/degree_audit/backend/actions/check_email.php', {
+        const response = await fetch('http://13.51.206.149/Degree_audit/backend/actions/check_email.php', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -75,7 +75,7 @@ export default () =>
 
     try 
     {
-      const response = await fetch('http://localhost/degree_audit/backend/actions/check_auth.php', 
+      const response = await fetch('http://13.51.206.149/Degree_audit/backend/actions/check_auth.php', 
       {
         method: 'POST',
         headers: 
@@ -113,7 +113,7 @@ export default () =>
     <div className="register-container">
       <div className="overlay">
         <div className="welcome">
-          <h1>Authentication Portal</h1>
+          <h1 className='text-4xl font-bold'>Authentication Portal</h1>
         </div>
         
         <div className="register-box">
@@ -126,7 +126,7 @@ export default () =>
               id="email"
               value={formData.email} 
               onChange={handleChange}
-              className={errors.email ? 'input-error shake' : ''}
+              className={`text-black ${errors.email ? 'input-error shake' : ''}`}
             />
             {errors.email && <div className="error-message">{errors.email}</div>}
             <input 
@@ -136,7 +136,7 @@ export default () =>
               id="authcode"
               value={formData.authcode} 
               onChange={handleChange}
-              className={errors.authcode ? 'input-error shake' : ''}
+              className={`text-black ${errors.authcode ? 'input-error shake' : ''}`}
             />
             {errors.authcode && <div className="error-message">{errors.authcode}</div>}
             <button type="submit">Authenticate</button>

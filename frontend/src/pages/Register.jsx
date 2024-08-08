@@ -1,6 +1,7 @@
 import './Register.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import TypewriterTitle from './TypewriterTitle';
 
 export default () => 
 {
@@ -41,7 +42,7 @@ export default () =>
     }
     else {
       try {
-        const response = await fetch('http://localhost/degree_audit/backend/actions/check_email.php', {
+        const response = await fetch('http://13.51.206.149/Degree_audit/backend/actions/check_email.php', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -91,7 +92,7 @@ export default () =>
 
     try 
     {
-      const response = await fetch('http://localhost/degree_audit/backend/actions/register.php', 
+      const response = await fetch('http://13.51.206.149/Degree_audit/backend/actions/register.php', 
       {
         method: 'POST',
         headers: 
@@ -129,9 +130,9 @@ export default () =>
     <div className="register-container">
       <div className="overlay">
         <div className="welcome">
-          <h1>WELCOME TO ASHESI'S DEGREE PORTAL!</h1>
+          <h1 className='text-4xl font-bold'>WELCOME TO <span className='text-red-500'>ASHESI'S DEGREE PORTAL!</span></h1>
+          <h2 className="font-semibold text-3xl text-center text-white-700"><TypewriterTitle /></h2>
         </div>
-        
         <div className="register-box">
           <h2>Register Now!</h2>
           <form onSubmit={handleSubmit}>
@@ -142,7 +143,7 @@ export default () =>
               id="email"
               value={formData.email} 
               onChange={handleChange}
-              className={errors.email ? 'input-error shake' : ''}
+              className={`text-black ${errors.email ? 'input-error shake' : ''}`}
             />
             {errors.email && <div className="error-message">{errors.email}</div>}
             <input 
@@ -152,7 +153,7 @@ export default () =>
               id="student_id"
               value={formData.studentid} 
               onChange={handleChange}
-              className={errors.studentid ? 'input-error shake' : ''}
+              className={`text-black ${errors.studentid ? 'input-error shake' : ''}`}
             />
             {errors.studentid && <div className="error-message">{errors.studentid}</div>}
             <input 
@@ -162,7 +163,7 @@ export default () =>
               id="password"
               value={formData.password} 
               onChange={handleChange}
-              className={errors.password ? 'input-error shake' : ''}
+              className={`text-black ${errors.password ? 'input-error shake' : ''}`}
             />
             {errors.password && <div className="error-message">{errors.password}</div>}
             <input 
@@ -172,13 +173,13 @@ export default () =>
               id="confirm"
               value={formData.confirm} 
               onChange={handleChange}
-              className={errors.confirm ? 'input-error shake' : ''}
+              className={`text-black ${errors.confirm ? 'input-error shake' : ''}`}
             />
             {errors.confirm && <div className="error-message">{errors.confirm}</div>}
             <button type="submit">Register</button>
           </form>
           <p>
-            <routes>Already have an account? <Link to="/login">Sign In</Link></routes>
+            Already have an account? <Link to="/login">Sign In</Link>
           </p>
         </div>
       </div>

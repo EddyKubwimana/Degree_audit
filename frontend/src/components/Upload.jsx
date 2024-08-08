@@ -9,13 +9,24 @@ import {
 import { Loader2, Plus } from "lucide-react";
 import { Button } from "./button";
 import { useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default () => 
 {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [courses, setCourses] = useState([]);
-  const [saving, setSaving] = useState([false])
+  const [saving, setSaving] = useState(false)
+  const [successMessage, setSuccessMessage] = useState('');
+
+  const notifySuccess = () => {
+    toast.success('Courses saved successfully!', {
+      className: 'custom-toast', // Add a custom class for custom styling
+      autoClose: 3000, // Auto close after 3 seconds
+      closeOnClick: true, // Allow closing on click
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,18 +74,67 @@ export default () =>
     setCourses(updatedCourses);
   };
 
-  const handleSave = () => {
-    setSaving(true)
-    const sqlQueries = courses.map((course) => {
-      // Ensure SQL query is properly formatted
-      return `INSERT INTO courses (studentid, name, grade, units) VALUES ('${sessionStorage.getItem('id')}', '${course.name}', '${course.grade}', ${course.units});`;
-    });
-
+  const handleSave = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+  
+    // Prepare data to be sent as JSON
+    const studentId = sessionStorage.getItem('id');
+    const coursesData = courses.map((course) => ({
+      studentId,
+      name: course.name,
+      grade: course.grade,
+      units: course.units
+    }));
+  
+    try 
+    {
+      const response = await fetch("http://13.51.206.149/Degree_audit/backend/actions/save_courses.php", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', // Set correct content type
+        },
+        body: JSON.stringify(coursesData), // Send as JSON
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to submit form data for login');
+      }
+  
+      const data = await response.json();
+      console.log('Server response:', data.success === "Courses saved successfully");
+      if (data.success === "Courses saved successfully")
+      {
+        notifySuccess();
+      }
+    } 
+    catch (error) 
+    {
+      console.error('Error:', error);
+      toast.error('An error occurred while saving courses try again later.', {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } 
+    finally 
+    {
+      setSaving(false); 
+    }
   };
 
   return (
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <Dialog>
+      {successMessage && (
+        <div className="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg" role="alert">
+          {successMessage}
+        </div>
+      )}
         <DialogTrigger>
          <div className="border-dashed border-2 flex border-green-600 h-full rounded-lg items-center justify-center sm:flex-col hover:shadow-xl transition hover:-translate-y-1 flex-row p-4">
            <Plus className="w-6 h-6 text-green-600" strokeWidth={3} />
@@ -160,16 +220,28 @@ export default () =>
                </tbody>
              </table>
              </div>
-             <div className="mt-4 flex justify-end">
+             <form className="mt-4 flex justify-end" onSubmit={handleSave}>
                <Button
-                 onClick={handleSave}
+                 type="submit"
                  className="bg-green-600 text-white"
                  disabled={saving}
                >
-                 {/* {saving && <Loader2 className="w-4 h-4 mr-2 animate-spin" />} */}
+                 {saving && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
                  Save
                </Button>
-             </div>
+               <ToastContainer
+                  position="bottom-right"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                  className="absolute right-12"
+                />
+             </form>
            </div>
          )}
        </DialogContent>

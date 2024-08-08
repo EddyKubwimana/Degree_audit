@@ -39,7 +39,7 @@ export default () =>
     }
     else {
       try {
-        const response = await fetch('http://localhost/degree_audit/backend/actions/check_email.php', {
+        const response = await fetch('http://13.51.206.149/Degree_audit/backend/actions/check_email.php', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -75,7 +75,7 @@ export default () =>
 
     try 
     {
-      const response = await fetch('http://localhost/degree_audit/backend/actions/login.php', 
+      const response = await fetch('http://13.51.206.149/Degree_audit/backend/actions/login.php', 
       {
         method: 'POST',
         headers: 
@@ -117,11 +117,11 @@ export default () =>
     <div className="register-container">
       <div className="overlay">
         <div className="welcome">
-          <h1>Login Portal</h1>
+          <h1 className='text-4xl font-bold'>Login Portal</h1>
         </div>
         
         <div className="register-box">
-          <h2>Login Now!</h2>
+          <h2 className=''>Login Now!</h2>
           <form onSubmit={handleSubmit}>
             <input 
               type="email" 
