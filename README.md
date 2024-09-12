@@ -57,10 +57,10 @@ http://localhost:3000
 ## Screenshots
 
 ### Login Page
-![Login Page](FigmaaImages/Screenshot 2024-09-12 at 17.52.28.png)
+![Login Page](FigmaaImages/login.png)
 
 ###  Register Page
-![Home Page](screenshots/home.png)
+![Home Page](screenshots/register.png)
 
 ## Contributing
 
