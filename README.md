@@ -57,7 +57,7 @@ http://localhost:3000
 ## Screenshots
 
 ### Login Page
-![Login Page](screenshots/login.png)
+![Login Page](FigmaaImages/Screenshot 2024-09-12 at 17.52.28.png)
 
 ###  Register Page
 ![Home Page](screenshots/home.png)
