@@ -3,7 +3,7 @@
 # Degree Audit System
 
 This is a Degree Audit System designed to help Ashesi University students easily track their academic progress and meet their degree requirements. The system provides students with a clear overview of their courses, grades, and degree requirements, making it easier to audit their academic progress towards graduation.
----
+
 ## Features
 
 - **Login System:** Secure authentication for users.
@@ -59,7 +59,7 @@ http://localhost:3000
 ### Login Page
 ![Login Page](screenshots/login.png)
 
-### Home Page
+###  Register Page
 ![Home Page](screenshots/home.png)
 
 ## Contributing
