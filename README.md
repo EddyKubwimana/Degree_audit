@@ -1,11 +1,9 @@
-Here’s a sample `README.md` file for your Degree Audit project on GitHub. You can update it with specific details, like adding actual screenshots and refining the description if needed.
 
----
 
 # Degree Audit System
 
 This is a Degree Audit System designed to help Ashesi University students easily track their academic progress and meet their degree requirements. The system provides students with a clear overview of their courses, grades, and degree requirements, making it easier to audit their academic progress towards graduation.
-
+---
 ## Features
 
 - **Login System:** Secure authentication for users.
@@ -18,8 +16,9 @@ This is a Degree Audit System designed to help Ashesi University students easily
 
 - React.js
 - Node.js
-- Express
-- MongoDB
+- Php
+- Mysql
+  
 
 ## Installation
 
@@ -34,7 +33,7 @@ git clone https://github.com/EddyKubwimana/Degree_audit.git
 2. **Navigate into the project directory:**
 
 ```bash
-cd Degree_audit
+cd Degree_audit/frontend
 ```
 
 3. **Install dependencies:**
@@ -76,5 +75,4 @@ http://localhost:3000
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
-
-Make sure to create a `screenshots` folder in the root of your project and add images like `login.png` and `home.png`. Let me know if you'd like assistance generating or capturing the screenshots!
+Take care
