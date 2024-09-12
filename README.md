@@ -60,7 +60,7 @@ http://localhost:3000
 ![Login Page](FigmaaImages/login.png)
 
 ###  Register Page
-![Home Page](screenshots/register.png)
+![Home Page](FigmaaImages/register.png)
 
 ## Contributing
 
